@@ -1,0 +1,76 @@
+---
+# Apache DevLake Helm Values - Lab Environment
+# OpenShift-compatible configuration with Routes
+
+# Service Configuration - Use ClusterIP instead of NodePort
+service:
+  type: ClusterIP
+  port: 4000
+
+# UI Service Configuration
+uiService:
+  type: ClusterIP
+  port: 4000
+
+# Grafana Configuration
+grafana:
+  # Use ClusterIP for Grafana service
+  service:
+    type: ClusterIP
+    port: 3000
+
+  # Enable Grafana deployment
+  enabled: true
+
+  # Admin credentials (change in production)
+  adminPassword: admin
+
+# MySQL Configuration
+mysql:
+  # Use internal MySQL (not external)
+  useExternal: false
+
+  # Storage configuration
+  storage: 10Gi
+  storageClass: gp3-csi
+
+  # Root password (change in production)
+  rootPassword: devlake
+
+  # Database configuration
+  database: devlake
+  username: devlake
+  password: devlake
+
+# Lake (DevLake API) Configuration
+lake:
+  # Encryption secret for sensitive data
+  encryptionSecret:
+    secret: GZWCUCVEKXBEXAELSFHVFBWBZDVLAHBGKMZFCJCMMIEUIODCLMYWOERRGQODGZHEKDCJEYJZXZFGVHAQECTUXBPAYCNCKPHOMTOBXJVSQPBTPGQSACPPZTHPVDIGTRNW
+
+  # Enable all required components
+  enabled: true
+
+# OpenShift Route Configuration (optional - can be created separately)
+# Note: DevLake Helm chart may not have native Route support
+# Routes will be created manually if needed
+
+# Ingress configuration (alternative to Routes)
+ingress:
+  enabled: false
+  # Uncomment if using Ingress instead of Routes
+  # className: openshift-default
+  # hosts:
+  #   - host: devlake-lab.apps.cluster-r9rpv.r9rpv.sandbox2229.opentlc.com
+  #     paths:
+  #       - path: /
+  #         pathType: Prefix
+
+# Resource limits (adjust based on cluster capacity)
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
