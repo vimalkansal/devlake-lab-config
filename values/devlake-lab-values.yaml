@@ -25,6 +25,12 @@ grafana:
   # Admin credentials (change in production)
   adminPassword: admin
 
+  # Grafana server configuration for OpenShift Route
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s/"
+      serve_from_sub_path: false
+
 # MySQL Configuration
 mysql:
   # Use internal MySQL (not external)
