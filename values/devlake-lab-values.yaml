@@ -31,8 +31,10 @@ mysql:
   useExternal: false
 
   # Storage configuration
-  storage: 10Gi
-  storageClass: gp3-csi
+  storage:
+    type: pvc
+    class: gp3-csi
+    size: 10Gi
 
   # Root password (change in production)
   rootPassword: devlake
